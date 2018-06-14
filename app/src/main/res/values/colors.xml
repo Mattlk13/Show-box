@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>-->
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorAccent">#CDDC39</color>
+    <color name="grey400">#BDBDBD</color>
+    <color name="teallight">#e0f2f1</color>
+    <color name="black">#000</color>
+    <color name="gunmetal">#9CA9B6</color>
+    <color name="background">#181B20</color>
+
+
+</resources>
