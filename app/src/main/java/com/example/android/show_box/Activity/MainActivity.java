@@ -92,9 +92,15 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         if(isConnected){
             mProgressBar.setVisibility(VISIBLE);
             movieFeed(sort_id);
+            mProgressBar.setVisibility(GONE);
         } else {
-            mAdapter.clear();
+            if(mAdapter != null) {
+                mAdapter.clear();
+            }
+            apiTV.setText("Network Not Available");
+            apiTV.setTextColor(getResources().getColor(R.color.white));
             Toast.makeText(MainActivity.this, "Network Not Available", Toast.LENGTH_LONG).show();
+            mProgressBar.setVisibility(GONE);
         }
     }
 
