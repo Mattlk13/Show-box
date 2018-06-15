@@ -180,7 +180,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                   apiTV.setText(R.string.API_key_error);
                   mProgressBar.setVisibility(GONE);
             } else {
-                 apiTV.setVisibility(GONE);
                  switch (sort_order) {
 
                         case 1:
@@ -229,9 +228,9 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                         apiTV.setTextColor(getResources().getColor(R.color.white));
                         break;
                     case 404:
-                        Toast.makeText(MainActivity.this, "Invalid id: The pre-requisite id is invalid or not found.", Toast.LENGTH_LONG).show();
                         apiTV.setText(R.string.error_404);
                         apiTV.setTextColor(getResources().getColor(R.color.white));
+                        Toast.makeText(MainActivity.this, "Invalid id: The pre-requisite id is invalid or not found.", Toast.LENGTH_LONG).show();
                         break;
                     case 500:
                         Toast.makeText(MainActivity.this, "Internal error: Something went wrong, contact TMDb.", Toast.LENGTH_LONG).show();
