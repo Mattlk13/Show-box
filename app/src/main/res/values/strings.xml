@@ -7,4 +7,6 @@
     <string name="user_ratings_lable">User Ratings:</string>
     <string name="release_date_lable">Release Date:</string>
     <string name="synopsis_lable">Synopsis:</string>
+    <string name="API_key_error">Insert API key in gradle.properties</string>
+    <string name="error_404">Error 404</string>
 </resources>

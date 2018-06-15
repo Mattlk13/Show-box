@@ -22,7 +22,6 @@
         android:id="@+id/API_Key"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Insert API key in gradle.properties"
         android:textColor="@android:color/white"
         android:padding="15dp"
         android:gravity="center" />

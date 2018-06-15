@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         MovieData_Interface apiService = ApiClient.getClient().create(MovieData_Interface.class);
         Call<MovieResponse> call = null;
         if(API_KEY == "Enter your API key here"){
-                  apiTV.setVisibility(VISIBLE);
+                  apiTV.setText(R.string.API_key_error);
                   mProgressBar.setVisibility(GONE);
             } else {
                  apiTV.setVisibility(GONE);
@@ -199,16 +199,62 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     call.enqueue(new Callback<MovieResponse>() {
         @Override
         public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-            if (movies == null) {
-                movies = response.body().getResults();
-                generateMovieList(movies);
-                Log.d(TAG, "number of movies received:" + movies.size());
+            Log.v("status code", String.valueOf(response.code()));
+            if(response.isSuccessful()) {
+                if (movies == null) {
+                    movies = response.body().getResults();
+                    generateMovieList(movies);
+                    Log.d(TAG, "number of movies received:" + movies.size());
+                } else {
+                    movies.addAll(response.body().getResults());
+                    mAdapter.notifyDataSetChanged();
+                    Log.d(TAG, "number of movies received1:" + movies.size());
+                }
             } else {
-                movies.addAll(response.body().getResults());
-                mAdapter.notifyDataSetChanged();
-                Log.d(TAG, "number of movies received1:" + movies.size());
-            }
 
+                switch (response.code()){
+                    case 400:
+                        Toast.makeText(MainActivity.this, "Validation failed.", Toast.LENGTH_LONG).show();
+                        apiTV.setText("Error 400");
+                        apiTV.setTextColor(getResources().getColor(R.color.white));
+                        break;
+                    case 401:
+                        Toast.makeText(MainActivity.this, "Suspended API key: Access to your account has been suspended, contact TMDb.", Toast.LENGTH_LONG).show();
+                        apiTV.setText("Error 401");
+                        apiTV.setTextColor(getResources().getColor(R.color.white));
+                        break;
+                    case 403:
+                        Toast.makeText(MainActivity.this, "Duplicate entry: The data you tried to submit already exists.", Toast.LENGTH_LONG).show();
+                        apiTV.setText("Error 403");
+                        apiTV.setTextColor(getResources().getColor(R.color.white));
+                        break;
+                    case 404:
+                        Toast.makeText(MainActivity.this, "Invalid id: The pre-requisite id is invalid or not found.", Toast.LENGTH_LONG).show();
+                        apiTV.setText(R.string.error_404);
+                        apiTV.setTextColor(getResources().getColor(R.color.white));
+                        break;
+                    case 500:
+                        Toast.makeText(MainActivity.this, "Internal error: Something went wrong, contact TMDb.", Toast.LENGTH_LONG).show();
+                        apiTV.setText("Error 500");
+                        apiTV.setTextColor(getResources().getColor(R.color.white));
+                        break;
+                    case 501:
+                        Toast.makeText(MainActivity.this, "Invalid service: this service does not exist.", Toast.LENGTH_LONG).show();
+                        apiTV.setText("Error 501");
+                        apiTV.setTextColor(getResources().getColor(R.color.white));
+                        break;
+                    case 503:
+                        Toast.makeText(MainActivity.this, "Service offline: This service is temporarily offline, try again later.", Toast.LENGTH_LONG).show();
+                        apiTV.setText("Error 503");
+                        apiTV.setTextColor(getResources().getColor(R.color.white));
+                        break;
+                        default:
+                            Toast.makeText(MainActivity.this, "Service broke status code is: " + response.code() , Toast.LENGTH_LONG).show();
+                            apiTV.setText("Error " + response.code());
+                            apiTV.setTextColor(getResources().getColor(R.color.white));
+                            break;
+                }
+            }
         }
 
         @Override
