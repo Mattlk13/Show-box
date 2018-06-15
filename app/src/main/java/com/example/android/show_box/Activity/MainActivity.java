@@ -119,8 +119,10 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 getSupportActionBar().setTitle("Popular Movies");
                 sort_id = 1;
                 NextPage = 1;
-                movies.clear();
-                mAdapter.notifyDataSetChanged();
+                if(movies != null) {
+                    movies.clear();
+                    mAdapter.notifyDataSetChanged();
+                }
                 movieFeed(sort_id);
 
             break;
@@ -128,8 +130,10 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 getSupportActionBar().setTitle("Top Rated");
                 sort_id = 2;
                 NextPage = 1;
-                movies.clear();
-                mAdapter.notifyDataSetChanged();
+                if(movies != null) {
+                    movies.clear();
+                    mAdapter.notifyDataSetChanged();
+                }
                 movieFeed(sort_id);
 
 
