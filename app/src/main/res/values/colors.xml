@@ -12,6 +12,7 @@
     <color name="gunmetal">#9CA9B6</color>
     <color name="background">#181B20</color>
     <color name="white">#fff</color>
+    <color name="lineSaperator">#303338</color>
 
 
 </resources>

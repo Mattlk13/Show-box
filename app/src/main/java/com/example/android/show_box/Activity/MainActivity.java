@@ -160,25 +160,32 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         };
 
         mRecyclerView.addOnScrollListener(scrollListener);
+        swipeToRefresh();
+    }
+
+
+    private void swipeToRefresh(){
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                movieFeed(sort_id);
+                movieFeed(1);
                 Log.v("Log of sort_ID", String.valueOf(sort_id));
-                mAdapter.notifyDataSetChanged();
+                if(movies != null) {
+                    mAdapter.notifyDataSetChanged();
+                }
+                mSwipeRefreshLayout.setRefreshing(false);
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 
-
     private void movieFeed (final int sort_order){
-
         MovieData_Interface apiService = ApiClient.getClient().create(MovieData_Interface.class);
         Call<MovieResponse> call = null;
         if(API_KEY == "Enter your API key here"){
                   apiTV.setText(R.string.API_key_error);
                   mProgressBar.setVisibility(GONE);
+                  swipeToRefresh();
             } else {
                  switch (sort_order) {
 

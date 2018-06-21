@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
     card_view:cardCornerRadius="3dp"
     card_view:cardElevation="3dp">
 <LinearLayout
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/background"
     android:orientation="vertical">
 
 
@@ -20,6 +22,7 @@
     android:layout_height="wrap_content"
     android:scaleType="fitXY"
     android:adjustViewBounds="true"
+    android:background="@color/background"
     android:contentDescription="@string/movie_poster"/>
 
 </LinearLayout>

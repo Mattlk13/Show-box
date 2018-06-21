@@ -19,17 +19,20 @@ public class MovieDetails_POJO implements Parcelable {
     private final String releaseDate;
     @SerializedName("backdrop_path")
     private final String backdrop_path;
+    @SerializedName("id")
+    private final String id;
 
 
 
 
-    public MovieDetails_POJO(String title, String posterPath, String overview, String voteAverage, String releaseDate, String backdrop_path) {
+    public MovieDetails_POJO(String title, String posterPath, String overview, String voteAverage, String releaseDate, String backdrop_path, String id) {
         this.title = title;
         this.posterPath = posterPath;
         this.overview = overview;
         this.voteAverage = voteAverage;
         this.releaseDate = releaseDate;
         this.backdrop_path = backdrop_path;
+        this.id = id;
     }
 
     protected MovieDetails_POJO(Parcel in) {
@@ -39,6 +42,7 @@ public class MovieDetails_POJO implements Parcelable {
         voteAverage = in.readString();
         releaseDate = in.readString();
         backdrop_path = in.readString();
+        id = in.readString();
     }
 
     public static final Creator<MovieDetails_POJO> CREATOR = new Creator<MovieDetails_POJO>() {
@@ -75,6 +79,9 @@ public class MovieDetails_POJO implements Parcelable {
     public String getBackdrop_path() {
         return backdrop_path;
     }
+    public String getid() {
+        return id;
+    }
 
     @Override
     public int describeContents() {
@@ -89,5 +96,6 @@ public class MovieDetails_POJO implements Parcelable {
         dest.writeString(voteAverage);
         dest.writeString(releaseDate);
         dest.writeString(backdrop_path);
+        dest.writeString(id);
     }
 }

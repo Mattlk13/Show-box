@@ -19,8 +19,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="D:\Android\Asserts\baseline-sort-white-18\2x\baseline_sort_white_18dp.png" />
-                                      <entry key="outputName" value="ic_action_sort" />
+                                      <entry key="imageAsset" value="D:\Android\Asserts\icons8-full-image-50.png" />
+                                      <entry key="outputName" value="ic_action_placeholder_white" />
                                       <entry key="theme" value="HOLO_DARK" />
                                     </map>
                                   </option>

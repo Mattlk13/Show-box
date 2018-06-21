@@ -78,8 +78,6 @@
         android:layout_width="338dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:lineSpacingExtra="4sp"
@@ -88,7 +86,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/poster_cv"
+        app:layout_constraintTop_toBottomOf="@+id/tagline_tv"
         tools:text="Wisecracking mercenary Deadpool battles the evil and powerful Cable and other bad guys to save a boy's life." />
 
     <TextView
@@ -159,6 +157,91 @@
         app:layout_constraintTop_toBottomOf="@+id/release_tv"
         card_view:srcCompat="@drawable/ic_action_rating" />
 
+    <TextView
+        android:id="@+id/tagline_tv"
+        android:layout_width="338dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:text="Tag Line"
+        android:textColor="@color/gunmetal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/poster_cv" />
+
+    <TextView
+        android:id="@+id/runtime_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="39dp"
+        android:text="Runtime"
+        android:textColor="@color/gunmetal"
+        app:layout_constraintEnd_toStartOf="@+id/poster_cv"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/lineSaperator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/synopsis_tv" />
+
+    <TextView
+        android:id="@+id/genres_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Genres"
+        android:textColor="@color/gunmetal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/genres_type_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Genres Type"
+        android:textColor="@color/gunmetal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genres_tv" />
+
+    <TextView
+        android:id="@+id/status_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:text="Status"
+        android:textColor="@color/gunmetal"
+        app:layout_constraintEnd_toStartOf="@+id/poster_cv"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/lineSaperator"
+        app:layout_constraintEnd_toStartOf="@+id/runtime_tv"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/release_tv" />
 
 </android.support.constraint.ConstraintLayout>
 </ScrollView>
