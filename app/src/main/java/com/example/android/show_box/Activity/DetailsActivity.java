@@ -161,7 +161,12 @@ public class DetailsActivity extends AppCompatActivity {
                         runtime.setText(runTime + "mins");
                         tagline.setText(tagLine);
                         status.setText(movieStatus);
-                        //genres_types.setText((CharSequence) moreDetails);
+                        String genre = "";
+                        for(Genre_POJO s : moreDetails){
+                            genre +=s + " ";
+                        }
+
+                        genres_types.setText(genre.toString());
                     }
                 }else {
                     switch (response.code()) {

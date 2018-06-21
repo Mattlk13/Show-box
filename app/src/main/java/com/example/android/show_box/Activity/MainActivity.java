@@ -2,6 +2,7 @@ package com.example.android.show_box.Activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -117,25 +118,39 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         switch(id){
             case R.id.action_sort_popular:
                 getSupportActionBar().setTitle("Popular Movies");
-                sort_id = 1;
-                NextPage = 1;
                 if(movies != null) {
                     movies.clear();
                     mAdapter.notifyDataSetChanged();
                 }
-                movieFeed(sort_id);
+                mProgressBar.setVisibility(VISIBLE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        sort_id = 1;
+                        NextPage = 1;
+                        movieFeed(sort_id);
+                        mProgressBar.setVisibility(GONE);
+                    }
+                }, 1000);
 
             break;
             case R.id.action_sort_top:
                 getSupportActionBar().setTitle("Top Rated");
-                sort_id = 2;
-                NextPage = 1;
                 if(movies != null) {
                     movies.clear();
                     mAdapter.notifyDataSetChanged();
                 }
-                movieFeed(sort_id);
+                mProgressBar.setVisibility(VISIBLE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        sort_id = 2;
+                        NextPage = 1;
 
+                        movieFeed(sort_id);
+                        mProgressBar.setVisibility(GONE);
+                    }
+                }, 1000);
 
             break;
         }
