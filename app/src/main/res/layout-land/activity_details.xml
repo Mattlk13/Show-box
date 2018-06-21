@@ -75,19 +75,18 @@
 
     <TextView
         android:id="@+id/synopsis_tv"
-        android:layout_width="0dp"
+        android:layout_width="338dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:lineSpacingExtra="4sp"
         android:textColor="@color/gunmetal"
         app:fontFamily="sans-serif"
-        app:layout_constraintEnd_toStartOf="@+id/poster_cv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tagline_tv"
         tools:text="Wisecracking mercenary Deadpool battles the evil and powerful Cable and other bad guys to save a boy's life." />
 
     <TextView
@@ -97,7 +96,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/gunmetal"
         app:layout_constraintBottom_toTopOf="@+id/synopsis_tv"
         app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -111,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/gunmetal"
         app:fontFamily="sans-serif"
         app:layout_constraintStart_toStartOf="parent"
@@ -153,11 +152,96 @@
         android:layout_height="23dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/release_tv"
         card_view:srcCompat="@drawable/ic_action_rating" />
 
+    <TextView
+        android:id="@+id/tagline_tv"
+        android:layout_width="338dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/gunmetal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/poster_cv"
+        tools:text="Tag Line" />
+
+    <TextView
+        android:id="@+id/runtime_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="39dp"
+        android:textColor="@color/gunmetal"
+        app:layout_constraintEnd_toStartOf="@+id/poster_cv"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/title_tv"
+        tools:text="Runtime" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/lineSaperator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/synopsis_tv" />
+
+    <TextView
+        android:id="@+id/genres_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/gunmetal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        tools:text="Genres" />
+
+    <TextView
+        android:id="@+id/genres_type_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/gunmetal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genres_tv"
+        tools:text="Genres Type" />
+
+    <TextView
+        android:id="@+id/status_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/gunmetal"
+        app:layout_constraintEnd_toStartOf="@+id/poster_cv"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:text="Status" />
+
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/lineSaperator"
+        app:layout_constraintEnd_toStartOf="@+id/runtime_tv"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/release_tv" />
 
 </android.support.constraint.ConstraintLayout>
 </ScrollView>

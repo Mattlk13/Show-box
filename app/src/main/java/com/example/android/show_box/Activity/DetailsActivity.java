@@ -158,17 +158,18 @@ public class DetailsActivity extends AppCompatActivity {
                         String budget = response.body().getBudget();
                         String revenue = response.body().getRevenue();
 
-                        runtime.setText(runTime + "mins");
+                        runtime.setText(runTime + getString(R.string.mins));
                         tagline.setText(tagLine);
                         status.setText(movieStatus);
                         String genre = "";
-                        for(Genre_POJO s : moreDetails){
-                            genre +=s + " ";
+                        for(int i = 0; i< moreDetails.size()-1 ; i++){
+                           genre += moreDetails.get(i).getName() + ", ";
                         }
+                        genre += moreDetails.get(moreDetails.size()-1).getName();
 
                         genres_types.setText(genre.toString());
                     }
-                }else {
+                } else {
                     switch (response.code()) {
                         case 400:
                             Toast.makeText(DetailsActivity.this, "Validation failed.", Toast.LENGTH_LONG).show();
@@ -212,7 +213,6 @@ public class DetailsActivity extends AppCompatActivity {
                             break;
                     }
                 }
-
             }
 
             @Override

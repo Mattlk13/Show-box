@@ -164,12 +164,12 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
-        android:text="Tag Line"
         android:textColor="@color/gunmetal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/poster_cv" />
+        app:layout_constraintTop_toBottomOf="@+id/poster_cv"
+        tools:text="Tag Line" />
 
     <TextView
         android:id="@+id/runtime_tv"
@@ -178,11 +178,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="39dp"
-        android:text="Runtime"
         android:textColor="@color/gunmetal"
         app:layout_constraintEnd_toStartOf="@+id/poster_cv"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/title_tv"
+        tools:text="Runtime" />
 
     <View
         android:id="@+id/view"
@@ -200,10 +200,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Genres"
         android:textColor="@color/gunmetal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        tools:text="Genres" />
 
     <TextView
         android:id="@+id/genres_type_tv"
@@ -211,10 +211,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Genres Type"
         android:textColor="@color/gunmetal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genres_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/genres_tv"
+        tools:text="Genres Type" />
 
     <TextView
         android:id="@+id/status_tv"
@@ -223,12 +223,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:text="Status"
         android:textColor="@color/gunmetal"
         app:layout_constraintEnd_toStartOf="@+id/poster_cv"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:text="Status" />
 
 
     <View
