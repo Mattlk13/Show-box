@@ -10,6 +10,26 @@ import java.util.List;
 
 public class Credits implements Parcelable {
 
+    public List<Cast> getCast() {
+        return cast;
+    }
+
+    public void setCast(List<Cast> cast) {
+        this.cast = cast;
+    }
+
+    public List<Crew> getCrew() {
+        return crew;
+    }
+
+    public void setCrew(List<Crew> crew) {
+        this.crew = crew;
+    }
+
+    public static Creator<Credits> getCREATOR() {
+        return CREATOR;
+    }
+
     @SerializedName("cast")
     @Expose
     private List<Cast> cast;

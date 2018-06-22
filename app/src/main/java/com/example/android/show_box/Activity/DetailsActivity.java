@@ -20,8 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.show_box.Adaptors.CastListAdapter;
 import com.example.android.show_box.Adaptors.VideoListAdapter;
 import com.example.android.show_box.Config.ConfigURL;
+import com.example.android.show_box.Models.Cast;
+import com.example.android.show_box.Models.Credits;
 import com.example.android.show_box.Models.Genre_POJO;
 import com.example.android.show_box.Models.MoreDetails;
 import com.example.android.show_box.Models.MovieDetails_POJO;
@@ -48,13 +51,12 @@ import retrofit2.Response;
 
 import static com.example.android.show_box.BuildConfig.API_KEY;
 import static com.example.android.show_box.Config.ConfigURL.CREDITS;
+import static com.example.android.show_box.Config.ConfigURL.POSTER_PATH;
 import static com.example.android.show_box.Config.ConfigURL.REVIEWS;
 import static com.example.android.show_box.Config.ConfigURL.VIDEOS;
 
 
 public class DetailsActivity extends AppCompatActivity {
-
-
 
     private static final String TAG = DetailsActivity.class.getSimpleName();
 
@@ -73,9 +75,14 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.backdrop_ll) LinearLayout backdrop;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+
     @BindView(R.id.video_rv)
-    RecyclerView mRecyclerView;
-    VideoListAdapter mAdapter;
+    RecyclerView mVideoRecyclerView;
+    @BindView(R.id.cast_rv)
+    RecyclerView mCastRecyclerView;
+
+    VideoListAdapter mVideoAdapter;
+    CastListAdapter mCastAdapter;
 
 
 
@@ -149,11 +156,18 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 private void videoRV(List<Videos_POJO> trailers){
-    mAdapter = new VideoListAdapter(this, trailers);
-    mRecyclerView.setLayoutManager(new GridLayoutManager(this, 1,GridLayoutManager.HORIZONTAL,false));
-    mRecyclerView.setHasFixedSize(true);
-    mRecyclerView.setAdapter(mAdapter);
+    mVideoAdapter = new VideoListAdapter(this, trailers);
+    mVideoRecyclerView.setLayoutManager(new GridLayoutManager(this, 1,GridLayoutManager.HORIZONTAL,false));
+    mVideoRecyclerView.setHasFixedSize(true);
+    mVideoRecyclerView.setAdapter(mVideoAdapter);
 }
+
+    private void castRV(List<Cast> cast){
+        mCastAdapter = new CastListAdapter(this, cast);
+        mCastRecyclerView.setLayoutManager(new GridLayoutManager(this, 1,GridLayoutManager.HORIZONTAL,false));
+        mCastRecyclerView.setHasFixedSize(true);
+        mCastRecyclerView.setAdapter(mCastAdapter);
+    }
 
 
 
@@ -174,16 +188,21 @@ private void videoRV(List<Videos_POJO> trailers){
                         String runTime = response.body().getRuntime();
                         String tagLine = response.body().getTagline();
                         String movieStatus = response.body().getStatus();
-                        String budget = response.body().getBudget();
-                        String revenue = response.body().getRevenue();
                         Videos videos = response.body().getVideos();
                         List<Videos_POJO> trailers =videos.getResults();
 
-                        Log.v("videos", trailers.get(0).getType().toString());
+                        // A recycler view to set trailers
                         Log.v("Video thumbnail URL", "https://img.youtube.com/vi/" + trailers.get(0).getKey() + "/0.jpg");
                         videoRV(trailers);
 
-                        runtime.setText(runTime + getString(R.string.mins));
+                        Credits credits = response.body().getCredits();
+                        List<Cast> cast = credits.getCast();
+
+                        Log.v("cast thumbnail URL", POSTER_PATH + cast.get(0).getProfilePath());
+                        castRV(cast);
+
+                        String runtimeInMins = runTime + getString(R.string.mins);
+                        runtime.setText(runtimeInMins);
                         tagline.setText(tagLine);
                         status.setText(movieStatus);
 
@@ -192,7 +211,8 @@ private void videoRV(List<Videos_POJO> trailers){
                            genre += moreDetails.get(i).getName() + ", ";
                         }
                         genre += moreDetails.get(moreDetails.size()-1).getName();
-                        genres_types.setText(genre.toString());
+
+                        genres_types.setText(genre);
                     }
                 }
             }
