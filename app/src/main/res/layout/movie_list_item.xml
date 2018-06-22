@@ -21,7 +21,7 @@
 <ImageView
     android:id="@+id/movie_poster_iv"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="280dp"
     android:scaleType="fitXY"
     android:adjustViewBounds="true"
     android:src="@drawable/ic_action_placeholder_white"

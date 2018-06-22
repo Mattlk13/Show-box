@@ -6,12 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.show_box.Models.Cast;
-import com.example.android.show_box.Models.MovieDetails_POJO;
 import com.example.android.show_box.R;
 import com.squareup.picasso.Picasso;
 
