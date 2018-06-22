@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
 import android.util.Log;
@@ -18,11 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.show_box.Adaptors.VideoListAdapter;
 import com.example.android.show_box.Config.ConfigURL;
 import com.example.android.show_box.Models.Genre_POJO;
 import com.example.android.show_box.Models.MoreDetails;
 import com.example.android.show_box.Models.MovieDetails_POJO;
-import com.example.android.show_box.Models.MovieResponse;
 import com.example.android.show_box.Models.Videos;
 import com.example.android.show_box.Models.Videos_POJO;
 import com.example.android.show_box.Network.ApiClient;
@@ -44,7 +46,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.view.View.GONE;
 import static com.example.android.show_box.BuildConfig.API_KEY;
 import static com.example.android.show_box.Config.ConfigURL.CREDITS;
 import static com.example.android.show_box.Config.ConfigURL.REVIEWS;
@@ -52,6 +53,8 @@ import static com.example.android.show_box.Config.ConfigURL.VIDEOS;
 
 
 public class DetailsActivity extends AppCompatActivity {
+
+
 
     private static final String TAG = DetailsActivity.class.getSimpleName();
 
@@ -70,6 +73,9 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.backdrop_ll) LinearLayout backdrop;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.video_rv)
+    RecyclerView mRecyclerView;
+    VideoListAdapter mAdapter;
 
 
 
@@ -142,7 +148,12 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
+private void videoRV(List<Videos_POJO> trailers){
+    mAdapter = new VideoListAdapter(this, trailers);
+    mRecyclerView.setLayoutManager(new GridLayoutManager(this, 1,GridLayoutManager.HORIZONTAL,false));
 
+    mRecyclerView.setAdapter(mAdapter);
+}
 
 
 
@@ -158,6 +169,7 @@ public class DetailsActivity extends AppCompatActivity {
             public void onResponse(Call<MoreDetails> call, Response<MoreDetails> response) {
                 if(response.isSuccessful()){
                     if( response.body() != null) {
+
                         List<Genre_POJO> moreDetails = response.body().getGenres();
                         String runTime = response.body().getRuntime();
                         String tagLine = response.body().getTagline();
@@ -166,60 +178,21 @@ public class DetailsActivity extends AppCompatActivity {
                         String revenue = response.body().getRevenue();
                         Videos videos = response.body().getVideos();
                         List<Videos_POJO> trailers =videos.getResults();
+
                         Log.v("videos", trailers.get(0).getType().toString());
+                        Log.v("Video thumbnail URL", "https://img.youtube.com/vi/" + trailers.get(0).getKey() + "/0.jpg");
+                        videoRV(trailers);
+
                         runtime.setText(runTime + getString(R.string.mins));
                         tagline.setText(tagLine);
                         status.setText(movieStatus);
+
                         String genre = "";
                         for(int i = 0; i< moreDetails.size()-1 ; i++){
                            genre += moreDetails.get(i).getName() + ", ";
                         }
                         genre += moreDetails.get(moreDetails.size()-1).getName();
-
                         genres_types.setText(genre.toString());
-                    }
-                } else {
-                    switch (response.code()) {
-                        case 400:
-                            Toast.makeText(DetailsActivity.this, "Validation failed.", Toast.LENGTH_LONG).show();
-                            synopsis.setText("Error 400");
-                            synopsis.setTextColor(getResources().getColor(R.color.white));
-                            break;
-                        case 401:
-                            Toast.makeText(DetailsActivity.this, "Suspended API key: Access to your account has been suspended, contact TMDb.", Toast.LENGTH_LONG).show();
-                            synopsis.setText("Error 401");
-                            synopsis.setTextColor(getResources().getColor(R.color.white));
-                            break;
-                        case 403:
-                            Toast.makeText(DetailsActivity.this, "Duplicate entry: The data you tried to submit already exists.", Toast.LENGTH_LONG).show();
-                            synopsis.setText("Error 403");
-                            synopsis.setTextColor(getResources().getColor(R.color.white));
-                            break;
-                        case 404:
-                            synopsis.setText(R.string.error_404);
-                            synopsis.setTextColor(getResources().getColor(R.color.white));
-                            Toast.makeText(DetailsActivity.this, "Invalid id: The pre-requisite id is invalid or not found.", Toast.LENGTH_LONG).show();
-                            break;
-                        case 500:
-                            Toast.makeText(DetailsActivity.this, "Internal error: Something went wrong, contact TMDb.", Toast.LENGTH_LONG).show();
-                            synopsis.setText("Error 500");
-                            synopsis.setTextColor(getResources().getColor(R.color.white));
-                            break;
-                        case 501:
-                            Toast.makeText(DetailsActivity.this, "Invalid service: this service does not exist.", Toast.LENGTH_LONG).show();
-                            synopsis.setText("Error 501");
-                            synopsis.setTextColor(getResources().getColor(R.color.white));
-                            break;
-                        case 503:
-                            Toast.makeText(DetailsActivity.this, "Service offline: This service is temporarily offline, try again later.", Toast.LENGTH_LONG).show();
-                            synopsis.setText("Error 503");
-                            synopsis.setTextColor(getResources().getColor(R.color.white));
-                            break;
-                        default:
-                            Toast.makeText(DetailsActivity.this, "Service broke status code is: " + response.code(), Toast.LENGTH_LONG).show();
-                            synopsis.setText("Error " + response.code());
-                            synopsis.setTextColor(getResources().getColor(R.color.white));
-                            break;
                     }
                 }
             }

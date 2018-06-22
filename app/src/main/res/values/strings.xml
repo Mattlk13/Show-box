@@ -10,4 +10,5 @@
     <string name="API_key_error">Insert API key in gradle.properties</string>
     <string name="error_404">Error 404</string>
     <string name="mins">mins</string>
+    <string name="video_thumbnail">Video Thumbnail</string>
 </resources>
