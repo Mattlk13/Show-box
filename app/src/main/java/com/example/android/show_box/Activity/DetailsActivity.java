@@ -44,6 +44,9 @@ import retrofit2.Response;
 
 import static android.view.View.GONE;
 import static com.example.android.show_box.BuildConfig.API_KEY;
+import static com.example.android.show_box.Config.ConfigURL.CREDITS;
+import static com.example.android.show_box.Config.ConfigURL.REVIEWS;
+import static com.example.android.show_box.Config.ConfigURL.VIDEOS;
 
 
 public class DetailsActivity extends AppCompatActivity {
@@ -142,9 +145,10 @@ public class DetailsActivity extends AppCompatActivity {
 
 
     private void network_helper(){
+        String queries = VIDEOS+","+CREDITS+","+REVIEWS;
 
         MovieData_Interface apiService = ApiClient.getClient().create(MovieData_Interface.class);
-        Call<MoreDetails> call = apiService.getMoreDetails(movie_details.getid(), API_KEY, "videos");
+        Call<MoreDetails> call = apiService.getMoreDetails(movie_details.getid(), API_KEY, queries);
         Log.v("url of more details", call.request().url() + "");
         Log.v("id", movie_details.getid());
         call.enqueue(new Callback<MoreDetails>() {

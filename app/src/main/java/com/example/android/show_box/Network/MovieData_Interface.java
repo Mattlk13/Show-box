@@ -17,6 +17,6 @@ public interface MovieData_Interface {
     Call<MovieResponse> getPopularMovies(@Query("page") int page, @Query("api_key") String apiKey);
 
     @GET("movie/{id}")
-    Call<MoreDetails> getMoreDetails(@Path("id") String id, @Query("api_key") String apiKey, @Query("append_to_response") String videos);
+    Call<MoreDetails> getMoreDetails(@Path("id") String id, @Query("api_key") String apiKey, @Query("append_to_response") String queries);
 
 }

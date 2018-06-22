@@ -202,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                   mProgressBar.setVisibility(GONE);
                   swipeToRefresh();
             } else {
+            apiTV.setVisibility(GONE);
                  switch (sort_order) {
 
                         case 1:
