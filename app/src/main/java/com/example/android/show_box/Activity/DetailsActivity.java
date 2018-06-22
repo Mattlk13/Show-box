@@ -144,7 +144,8 @@ public class DetailsActivity extends AppCompatActivity {
     private void network_helper(){
 
         MovieData_Interface apiService = ApiClient.getClient().create(MovieData_Interface.class);
-        Call<MoreDetails> call = apiService.getMoreDetails(movie_details.getid(), API_KEY);;
+        Call<MoreDetails> call = apiService.getMoreDetails(movie_details.getid(), API_KEY, "videos");
+        Log.v("url of more details", call.request().url() + "");
         Log.v("id", movie_details.getid());
         call.enqueue(new Callback<MoreDetails>() {
             @Override
@@ -221,6 +222,9 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
     @Override
     public boolean onSupportNavigateUp() {
