@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.android.show_box.Activity.DetailsActivity;
 import com.example.android.show_box.Config.ConfigURL;
@@ -53,7 +54,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         Picasso.with(context).load(imagePath)
                 .placeholder(R.drawable.ic_action_placeholder_white)
                 .into(holder.movieList);
-
+        holder.title.setText(mMovieList.get(position).getTitle());
         holder.movieList.setTransitionName("poster");
 
         holder.movieList.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +76,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     class MovieViewHolder extends RecyclerView.ViewHolder{
   @BindView(R.id.movie_poster_iv) ImageView movieList;
+  @BindView(R.id.home_title_tv)
+        TextView title;
   MovieListAdapter mAdapter;
 
     public MovieViewHolder(View itemView, MovieListAdapter movieListAdapter) {
