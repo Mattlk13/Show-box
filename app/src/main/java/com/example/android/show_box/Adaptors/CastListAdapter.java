@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.show_box.Models.Cast;
@@ -47,12 +48,14 @@ public class CastListAdapter extends RecyclerView.Adapter<CastListAdapter.CastVi
 
         String profile = POSTER_PATH + mCastList.get(position).getProfilePath();
         String profileName = mCastList.get(position).getName();
+        String charaterName = mCastList.get(position).getCharacter();
 
         Picasso.with(context).load(profile)
                 .placeholder(R.drawable.ic_action_placeholder_white)
                 .into(holder.mCastThumbnail);
 
         holder.mCastName.setText(profileName);
+        holder.mCharaterName.setText(charaterName);
 
     }
 
@@ -64,9 +67,11 @@ public class CastListAdapter extends RecyclerView.Adapter<CastListAdapter.CastVi
     class CastViewHolder extends RecyclerView.ViewHolder{
 
         @BindView(R.id.cast_thumbnail)
-        ImageButton mCastThumbnail;
+        ImageView mCastThumbnail;
         @BindView(R.id.cast_name_tv)
         TextView mCastName;
+        @BindView(R.id.charater_tv)
+        TextView mCharaterName;
 
         public CastViewHolder(View itemView) {
             super(itemView);

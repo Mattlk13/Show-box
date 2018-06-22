@@ -1,44 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/video_thumbnail_cv"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:background="@color/background"
-        card_view:cardPreventCornerOverlap="true"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardCornerRadius="3dp"
-        card_view:cardElevation="3dp" >
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
 
-        <ImageButton
+    <android.support.v7.widget.CardView
+
+        android:id="@+id/video_thumbnail_cv"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/background"
+        card_view:cardCornerRadius="35dp"
+        card_view:cardElevation="3dp"
+        card_view:cardPreventCornerOverlap="true"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
             android:id="@+id/cast_thumbnail"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/background"
+            android:layout_height="match_parent"
             android:contentDescription="@string/video_thumbnail"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_action_placeholder"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent" />
+            android:src="@drawable/ic_action_placeholder" />
 
-        <TextView
-            android:id="@+id/cast_name_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:textColor="@color/white"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.0"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/cast_thumbnail"
-            tools:text="Cast name" />
 
-    </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
+    <TextView
+        android:id="@+id/cast_name_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:textColor="@color/gunmetal"
+        android:textSize="10sp"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toBottomOf="@+id/video_thumbnail_cv"
+        tools:text="Cast name" />
 
+    <TextView
+        android:id="@+id/charater_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        android:textColor="@color/gunmetal"
+        android:textSize="9sp"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toBottomOf="@+id/cast_name_tv"
+        tools:text="Charater Name" />
+
+
+</android.support.constraint.ConstraintLayout>
