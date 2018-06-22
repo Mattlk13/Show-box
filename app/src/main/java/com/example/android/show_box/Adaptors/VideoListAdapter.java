@@ -1,6 +1,8 @@
 package com.example.android.show_box.Adaptors;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.android.show_box.Config.ConfigURL.VIDEOS_PATH;
 import static com.example.android.show_box.Config.ConfigURL.VIDEO_THUMBNAIL;
 import static com.example.android.show_box.Config.ConfigURL.VIDEO_THUMBNAIL_RESOLUTION;
 
@@ -45,11 +48,20 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Vide
     public void onBindViewHolder(@NonNull VideoViewHolder holder, int position) {
 
         String thumbnailPath = VIDEO_THUMBNAIL + trailers.get(position).getKey() + VIDEO_THUMBNAIL_RESOLUTION;
+        final String videoPath = VIDEOS_PATH + trailers.get(position).getKey();
         Log.v("Adapter Thumbnail", thumbnailPath);
 
         Picasso.with(context).load(thumbnailPath)
                 .placeholder(R.drawable.ic_action_placeholder_white)
                 .into(holder.mThumbnail);
+
+        holder.mThumbnail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoPath));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

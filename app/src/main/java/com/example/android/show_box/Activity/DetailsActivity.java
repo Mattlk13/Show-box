@@ -151,7 +151,7 @@ public class DetailsActivity extends AppCompatActivity {
 private void videoRV(List<Videos_POJO> trailers){
     mAdapter = new VideoListAdapter(this, trailers);
     mRecyclerView.setLayoutManager(new GridLayoutManager(this, 1,GridLayoutManager.HORIZONTAL,false));
-
+    mRecyclerView.setHasFixedSize(true);
     mRecyclerView.setAdapter(mAdapter);
 }
 
