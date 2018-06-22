@@ -3,6 +3,7 @@ package com.example.android.show_box.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -10,17 +11,34 @@ import java.util.List;
 public class MoreDetails implements Parcelable {
 
     @SerializedName("budget")
+    @Expose
     private final String budget;
     @SerializedName("status")
+    @Expose
     private final String status;
     @SerializedName("runtime")
+    @Expose
     private final String runtime;
     @SerializedName("revenue")
+    @Expose
     private final String revenue;
     @SerializedName("tagline")
+    @Expose
     private final String tagline;
     @SerializedName("genres")
+    @Expose
     private List<Genre_POJO> genres;
+    @SerializedName("videos")
+    @Expose
+    Videos videos;
+    @SerializedName("credits")
+    @Expose
+    private Credits credits;
+    @SerializedName("reviews")
+    @Expose
+    private Reviews reviews;
+
+
 
     public MoreDetails(String budget, List<Genre_POJO> genres, String status, String runtime, String revenue, String tagline) {
         this.budget = budget;
@@ -38,6 +56,9 @@ public class MoreDetails implements Parcelable {
         runtime = in.readString();
         revenue = in.readString();
         tagline = in.readString();
+        videos = in.readParcelable(Videos.class.getClassLoader());
+        credits = in.readParcelable(Credits.class.getClassLoader());
+        reviews = in.readParcelable(Reviews.class.getClassLoader());
     }
 
     public static final Creator<MoreDetails> CREATOR = new Creator<MoreDetails>() {
@@ -65,6 +86,9 @@ public class MoreDetails implements Parcelable {
         dest.writeString(runtime);
         dest.writeString(revenue);
         dest.writeString(tagline);
+        dest.writeParcelable(videos, flags);
+        dest.writeParcelable(credits, flags);
+        dest.writeParcelable(reviews, flags);
     }
 
     public String getBudget() {
@@ -89,6 +113,28 @@ public class MoreDetails implements Parcelable {
 
     public List<Genre_POJO> getGenres() {
         return genres;
+    }
+    public Videos getVideos() {
+        return videos;
+    }
+
+    public void setVideos(Videos videos) {
+        this.videos = videos;
+    }
+    public Credits getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Credits credits) {
+        this.credits = credits;
+    }
+
+    public Reviews getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Reviews reviews) {
+        this.reviews = reviews;
     }
 
     public void setGenres(List<Genre_POJO> genres) {

@@ -23,6 +23,8 @@ import com.example.android.show_box.Models.Genre_POJO;
 import com.example.android.show_box.Models.MoreDetails;
 import com.example.android.show_box.Models.MovieDetails_POJO;
 import com.example.android.show_box.Models.MovieResponse;
+import com.example.android.show_box.Models.Videos;
+import com.example.android.show_box.Models.Videos_POJO;
 import com.example.android.show_box.Network.ApiClient;
 import com.example.android.show_box.Network.MovieData_Interface;
 import com.example.android.show_box.R;
@@ -162,7 +164,9 @@ public class DetailsActivity extends AppCompatActivity {
                         String movieStatus = response.body().getStatus();
                         String budget = response.body().getBudget();
                         String revenue = response.body().getRevenue();
-
+                        Videos videos = response.body().getVideos();
+                        List<Videos_POJO> trailers =videos.getResults();
+                        Log.v("videos", trailers.get(0).getType().toString());
                         runtime.setText(runTime + getString(R.string.mins));
                         tagline.setText(tagLine);
                         status.setText(movieStatus);
