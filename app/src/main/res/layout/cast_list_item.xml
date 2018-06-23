@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@+id/cast_name_tv"
-        android:layout_width="match_parent"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
@@ -48,10 +48,12 @@
 
     <TextView
         android:id="@+id/charater_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="63dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="TextView"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textAlignment="center"
         android:textColor="@color/gunmetal"
         android:textSize="9sp"
         card_view:layout_constraintEnd_toEndOf="parent"
