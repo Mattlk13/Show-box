@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     List<MovieDetails_POJO> movies;
 
 
-    int spanCount = 2;
+    int spanCount;
     private final String KEY_RECYCLER_STATE = "recycler_state";
     //private static Bundle mBundleRecyclerViewState;
     private Parcelable mListState = null;
@@ -76,6 +76,14 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         getSupportActionBar().setTitle("Popular Movies");
         mToolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_action_sort));
 
+        Configuration newConfig = getResources().getConfiguration();
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            spanCount = 4;
+        } else {
+            if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+                spanCount = 2;
+            }
+        }
         // Manually checking internet connection
         checkConnection();
 
