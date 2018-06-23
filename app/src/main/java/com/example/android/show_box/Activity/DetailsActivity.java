@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.show_box.Adaptors.CastListAdapter;
+import com.example.android.show_box.Adaptors.ReviewListAdapter;
 import com.example.android.show_box.Adaptors.VideoListAdapter;
 import com.example.android.show_box.Config.ConfigURL;
 import com.example.android.show_box.Models.Cast;
@@ -28,6 +29,8 @@ import com.example.android.show_box.Models.Credits;
 import com.example.android.show_box.Models.Genre_POJO;
 import com.example.android.show_box.Models.MoreDetails;
 import com.example.android.show_box.Models.MovieDetails_POJO;
+import com.example.android.show_box.Models.Reviews;
+import com.example.android.show_box.Models.Reviews_POJO;
 import com.example.android.show_box.Models.Videos;
 import com.example.android.show_box.Models.Videos_POJO;
 import com.example.android.show_box.Network.ApiClient;
@@ -43,6 +46,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -75,14 +79,20 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.backdrop_ll) LinearLayout backdrop;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.review_tv)
+    TextView mReviewTV;
+
 
     @BindView(R.id.video_rv)
     RecyclerView mVideoRecyclerView;
     @BindView(R.id.cast_rv)
     RecyclerView mCastRecyclerView;
+    @BindView(R.id.review_rv)
+    RecyclerView mReviewRecyclerView;
 
     VideoListAdapter mVideoAdapter;
     CastListAdapter mCastAdapter;
+    ReviewListAdapter mReviewAdapter;
 
 
 
@@ -169,6 +179,13 @@ private void videoRV(List<Videos_POJO> trailers){
         mCastRecyclerView.setAdapter(mCastAdapter);
     }
 
+    private void reviewRV(List<Reviews_POJO> reviews){
+        mReviewAdapter = new ReviewListAdapter(this, reviews);
+        mReviewRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        mReviewRecyclerView.setHasFixedSize(true);
+        mReviewRecyclerView.setNestedScrollingEnabled(false);
+        mReviewRecyclerView.setAdapter(mReviewAdapter);
+    }
 
 
     private void network_helper(){
@@ -183,23 +200,37 @@ private void videoRV(List<Videos_POJO> trailers){
             public void onResponse(Call<MoreDetails> call, Response<MoreDetails> response) {
                 if(response.isSuccessful()){
                     if( response.body() != null) {
-
                         List<Genre_POJO> moreDetails = response.body().getGenres();
                         String runTime = response.body().getRuntime();
                         String tagLine = response.body().getTagline();
                         String movieStatus = response.body().getStatus();
                         Videos videos = response.body().getVideos();
-                        List<Videos_POJO> trailers =videos.getResults();
-
-                        // A recycler view to set trailers
-                        Log.v("Video thumbnail URL", "https://img.youtube.com/vi/" + trailers.get(0).getKey() + "/0.jpg");
-                        videoRV(trailers);
+                        if(videos.getResults().size() != 0) {
+                            List<Videos_POJO> trailers = videos.getResults();
+                            // A recycler view to set trailers
+                            Log.v("Video thumbnail URL", "https://img.youtube.com/vi/" + trailers.get(0).getKey() + "/0.jpg");
+                            videoRV(trailers);
+                        }
 
                         Credits credits = response.body().getCredits();
-                        List<Cast> cast = credits.getCast();
+                        if(credits.getCast().size() != 0) {
+                            List<Cast> cast = credits.getCast();
+                            // A recycler view to set cast
+                            Log.v("cast thumbnail URL", POSTER_PATH + cast.get(0).getProfilePath());
+                            castRV(cast);
+                        }
 
-                        Log.v("cast thumbnail URL", POSTER_PATH + cast.get(0).getProfilePath());
-                        castRV(cast);
+
+                        Reviews reviews = response.body().getReviews();
+                        if(reviews.getResults().size() != 0) {
+                            List<Reviews_POJO> userReviews = reviews.getResults();
+                            // A recycler view to set userReviews
+                            Log.v("reviews author", userReviews.get(0).getAuthor());
+                            reviewRV(userReviews);
+                        } else {
+                            String reviewDetails = "No Reviews Available";
+                            mReviewTV.setText(reviewDetails);
+                        }
 
                         String runtimeInMins = runTime + getString(R.string.mins);
                         runtime.setText(runtimeInMins);

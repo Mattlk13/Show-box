@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Reviews implements Parcelable{
+
     @SerializedName("page")
     @Expose
     private Integer page;
@@ -21,6 +22,43 @@ public class Reviews implements Parcelable{
     @SerializedName("total_results")
     @Expose
     private Integer totalResults;
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public List<Reviews_POJO> getResults() {
+        return results;
+    }
+
+    public void setResults(List<Reviews_POJO> results) {
+        this.results = results;
+    }
+
+    public Integer getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
+    }
+
+    public Integer getTotalResults() {
+        return totalResults;
+    }
+
+    public void setTotalResults(Integer totalResults) {
+        this.totalResults = totalResults;
+    }
+
+    public static Creator<Reviews> getCREATOR() {
+        return CREATOR;
+    }
+
+
 
     protected Reviews(Parcel in) {
         if (in.readByte() == 0) {

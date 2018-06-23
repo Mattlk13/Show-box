@@ -330,10 +330,14 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
         // Checks the orientation of the screen
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            manager.setSpanCount(4);
+            if(manager != null) {
+                manager.setSpanCount(4);
+            }
             Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            manager.setSpanCount(2);
+            if(manager != null) {
+                manager.setSpanCount(2);
+            }
             Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
         }
     }
