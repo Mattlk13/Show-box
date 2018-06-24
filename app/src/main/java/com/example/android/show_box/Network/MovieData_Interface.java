@@ -19,4 +19,7 @@ public interface MovieData_Interface {
     @GET("movie/{id}")
     Call<MoreDetails> getMoreDetails(@Path("id") String id, @Query("api_key") String apiKey, @Query("append_to_response") String queries);
 
+    @GET("movie/{id}")
+    Call<MoreDetails> getSimilarMovies(@Path("id") String id, @Query("api_key") String apiKey);
+
 }
