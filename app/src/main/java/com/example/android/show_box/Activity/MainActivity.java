@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     private void movieFeed (final int sort_order){
         MovieData_Interface apiService = ApiClient.getClient().create(MovieData_Interface.class);
         Call<MovieResponse> call = null;
-        if(API_KEY == "Enter your API key here"){
+        if(API_KEY.equals("Enter your API key here")){
                   apiTV.setText(R.string.API_key_error);
                   mProgressBar.setVisibility(GONE);
                   swipeToRefresh();
