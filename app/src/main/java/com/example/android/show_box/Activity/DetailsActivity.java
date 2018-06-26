@@ -1,7 +1,6 @@
 package com.example.android.show_box.Activity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -19,7 +18,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.show_box.Adaptors.CastListAdapter;
 import com.example.android.show_box.Adaptors.ReviewListAdapter;
@@ -31,10 +29,9 @@ import com.example.android.show_box.Models.Credits;
 import com.example.android.show_box.Models.Genre_POJO;
 import com.example.android.show_box.Models.MoreDetails;
 import com.example.android.show_box.Models.MovieDetails_POJO;
+import com.example.android.show_box.Models.MovieResponse;
 import com.example.android.show_box.Models.Reviews;
 import com.example.android.show_box.Models.Reviews_POJO;
-import com.example.android.show_box.Models.SimilarMovies;
-import com.example.android.show_box.Models.SimilarMoviesResults;
 import com.example.android.show_box.Models.Videos;
 import com.example.android.show_box.Models.Videos_POJO;
 import com.example.android.show_box.Network.ApiClient;
@@ -50,7 +47,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -69,7 +65,6 @@ public class DetailsActivity extends AppCompatActivity {
     private static final String TAG = DetailsActivity.class.getSimpleName();
 
     MovieDetails_POJO movie_details;
-    SimilarMoviesResults similarMovies_details;
 
     @BindView(R.id.movie_poster_iv) ImageView poster;
     @BindView(R.id.title_tv) TextView title;
@@ -126,12 +121,6 @@ public class DetailsActivity extends AppCompatActivity {
             movie_details = getIntent().getParcelableExtra("movieList");
             movieListDetails_helper();
         }
-        if(getIntent().getParcelableExtra("similarMovieList") != null) {
-            similarMovies_details = getIntent().getParcelableExtra("similarMovieList");
-            similarMovieListDetails_helper();
-        }
-
-
     }
 
 
@@ -189,58 +178,6 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
-    private void similarMovieListDetails_helper(){
-        String title_value = similarMovies_details.getTitle();
-        String poster_path = similarMovies_details.getPosterPath();
-        String plot_synopsis = similarMovies_details.getOverview();
-        String user_rating = similarMovies_details.getVoteAverage();
-        String release_date = similarMovies_details.getReleaseDate();
-        final String backdrop_path = similarMovies_details.getBackdropPath();
-
-
-        getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.shared_element_transation));
-        poster.setTransitionName("poster");
-
-        Picasso.with(this).load( ConfigURL.POSTER_PATH + poster_path)
-                .into(poster);
-
-        Picasso.with(this).load( ConfigURL.BACKDROP_PATH + backdrop_path)
-                .into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        backdrop.setBackgroundDrawable(new BitmapDrawable(bitmap));
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-                });
-
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat outputFormat = new SimpleDateFormat("dd-MMM-yyyy");
-        String outputDate = null;
-        try {
-            Date date = inputFormat.parse(release_date);
-            outputDate = outputFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        synopsis.setText(plot_synopsis);
-        rating.setText(user_rating);
-        release.setText(outputDate);
-        title.setText(title_value);
-
-        network_helper(Integer.toString(similarMovies_details.getId()));
-    }
-
-
     private void videoRV(List<Videos_POJO> trailers){
         mVideoAdapter = new VideoListAdapter(this, trailers);
         mVideoRecyclerView.setLayoutManager(new GridLayoutManager(this, 1,GridLayoutManager.HORIZONTAL,false));
@@ -263,7 +200,7 @@ public class DetailsActivity extends AppCompatActivity {
         mReviewRecyclerView.setAdapter(mReviewAdapter);
     }
 
-    private void similarRV(List<SimilarMoviesResults> similar){
+    private void similarRV(List<MovieDetails_POJO> similar){
         mSimilarAdapter = new SimilarMovieListAdapter(this, similar);
         mSimilarRecyclerView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL,false));
         mSimilarRecyclerView.setHasFixedSize(true);
@@ -273,15 +210,15 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void similarMovie_network_helper(String id){
         MovieData_Interface apiService = ApiClient.getClient().create(MovieData_Interface.class);
-        Call<SimilarMovies> call = apiService.getSimilarMovies(id, API_KEY);
+        Call<MovieResponse> call = apiService.getSimilarMovies(id, API_KEY);
         Log.v("url of similar details", call.request().url() + "");
         Log.v("id",id);
-        call.enqueue(new Callback<SimilarMovies>() {
+        call.enqueue(new Callback<MovieResponse>() {
             @Override
-            public void onResponse(Call<SimilarMovies> call, Response<SimilarMovies> response) {
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 if(response.isSuccessful()){
                     if(response.body() != null){
-                        List<SimilarMoviesResults> similarMovies = response.body().getResults();
+                        List<MovieDetails_POJO> similarMovies = response.body().getResults();
                         similarRV(similarMovies);
                         Log.d(TAG, "number of similar movies received:" + similarMovies.size());
                     }
@@ -289,7 +226,7 @@ public class DetailsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<SimilarMovies> call, Throwable t) {
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });

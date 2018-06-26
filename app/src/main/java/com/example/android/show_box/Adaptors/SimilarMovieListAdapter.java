@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.android.show_box.Activity.DetailsActivity;
 import com.example.android.show_box.Config.ConfigURL;
-import com.example.android.show_box.Models.SimilarMoviesResults;
+import com.example.android.show_box.Models.MovieDetails_POJO;
 import com.example.android.show_box.R;
 import com.squareup.picasso.Picasso;
 
@@ -26,10 +26,10 @@ import butterknife.ButterKnife;
 public class SimilarMovieListAdapter extends RecyclerView.Adapter<SimilarMovieListAdapter.SimilarMovieViewHolder> {
 
     Context context;
-    private List<SimilarMoviesResults> mSimilarMovieList;
+    private List<MovieDetails_POJO> mSimilarMovieList;
     private LayoutInflater mInflater;
 
-    public SimilarMovieListAdapter(Context context, List<SimilarMoviesResults> mSimilarMovieList) {
+    public SimilarMovieListAdapter(Context context, List<MovieDetails_POJO> mSimilarMovieList) {
         this.context = context;
         this.mSimilarMovieList = mSimilarMovieList;
         mInflater = LayoutInflater.from(context);
@@ -56,7 +56,7 @@ public class SimilarMovieListAdapter extends RecyclerView.Adapter<SimilarMovieLi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailsActivity.class);
-                intent.putExtra("similarMovieList", mSimilarMovieList.get(position));
+                intent.putExtra("movieList", mSimilarMovieList.get(position));
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, holder.similarMovieList, "poster");
                 context.startActivity(intent, optionsCompat.toBundle());
             }
@@ -69,7 +69,7 @@ public class SimilarMovieListAdapter extends RecyclerView.Adapter<SimilarMovieLi
     }
 
     class SimilarMovieViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.similar_movie_poster_iv)
+        @BindView(R.id.movie_poster_iv)
         ImageView similarMovieList;
         @BindView(R.id.similar_title_tv)
         TextView similatTitle;
