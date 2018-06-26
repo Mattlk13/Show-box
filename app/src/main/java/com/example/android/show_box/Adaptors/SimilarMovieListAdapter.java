@@ -50,15 +50,12 @@ public class SimilarMovieListAdapter extends RecyclerView.Adapter<SimilarMovieLi
                 .into(holder.similarMovieList);
         holder.similatTitle.setText(mSimilarMovieList.get(position).getTitle());
 
-        holder.similarMovieList.setTransitionName("poster");
-
         holder.similarMovieList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("movieList", mSimilarMovieList.get(position));
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, holder.similarMovieList, "poster");
-                context.startActivity(intent, optionsCompat.toBundle());
+                context.startActivity(intent);
             }
         });
     }
@@ -69,7 +66,7 @@ public class SimilarMovieListAdapter extends RecyclerView.Adapter<SimilarMovieLi
     }
 
     class SimilarMovieViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.movie_poster_iv)
+        @BindView(R.id.similar_movie_poster_iv)
         ImageView similarMovieList;
         @BindView(R.id.similar_title_tv)
         TextView similatTitle;

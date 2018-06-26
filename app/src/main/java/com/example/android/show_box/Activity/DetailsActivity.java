@@ -11,8 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -169,6 +171,21 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         synopsis.setText(plot_synopsis);
+        synopsis.setEllipsize(TextUtils.TruncateAt.END);
+        synopsis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(synopsis.getMaxLines() == 4){
+                    synopsis.setEllipsize(null);
+                    synopsis.setMaxLines(100);
+                } else {
+                    if(synopsis.getMaxLines() == 100){
+                        synopsis.setEllipsize(TextUtils.TruncateAt.END);
+                        synopsis.setMaxLines(4);
+                    }
+                }
+            }
+        });
         rating.setText(user_rating);
         release.setText(outputDate);
         title.setText(title_value);
