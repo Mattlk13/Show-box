@@ -207,7 +207,7 @@ public class DetailsActivity extends AppCompatActivity {
         mSimilarRecyclerView.setAdapter(mSimilarAdapter);
     }
 
-
+//This is the similar movies recyclerview method helper
     private void similarMovie_network_helper(String id){
         MovieData_Interface apiService = ApiClient.getClient().create(MovieData_Interface.class);
         Call<MovieResponse> call = apiService.getSimilarMovies(id, API_KEY);
