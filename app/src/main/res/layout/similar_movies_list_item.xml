@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/similar_poster_cv"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="180dp"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
+    card_view:cardPreventCornerOverlap="true"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="3dp">
+    <LinearLayout
+        android:id="@+id/similar_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/similar_movie_poster_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_action_placeholder_white"
+            android:background="@color/background"
+            android:contentDescription="@string/movie_poster"/>
+
+        <TextView
+            android:id="@+id/similar_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:paddingLeft="5dp"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:background="@color/background"
+            android:textColor="@color/white"
+            tools:text="Title" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

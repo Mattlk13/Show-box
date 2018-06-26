@@ -1,6 +1,7 @@
 package com.example.android.show_box.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.android.show_box.Adaptors.CastListAdapter;
 import com.example.android.show_box.Adaptors.ReviewListAdapter;
+import com.example.android.show_box.Adaptors.SimilarMovieListAdapter;
 import com.example.android.show_box.Adaptors.VideoListAdapter;
 import com.example.android.show_box.Config.ConfigURL;
 import com.example.android.show_box.Models.Cast;
@@ -31,6 +33,8 @@ import com.example.android.show_box.Models.MoreDetails;
 import com.example.android.show_box.Models.MovieDetails_POJO;
 import com.example.android.show_box.Models.Reviews;
 import com.example.android.show_box.Models.Reviews_POJO;
+import com.example.android.show_box.Models.SimilarMovies;
+import com.example.android.show_box.Models.SimilarMoviesResults;
 import com.example.android.show_box.Models.Videos;
 import com.example.android.show_box.Models.Videos_POJO;
 import com.example.android.show_box.Network.ApiClient;
@@ -65,6 +69,7 @@ public class DetailsActivity extends AppCompatActivity {
     private static final String TAG = DetailsActivity.class.getSimpleName();
 
     MovieDetails_POJO movie_details;
+    SimilarMoviesResults similarMovies_details;
 
     @BindView(R.id.movie_poster_iv) ImageView poster;
     @BindView(R.id.title_tv) TextView title;
@@ -89,10 +94,13 @@ public class DetailsActivity extends AppCompatActivity {
     RecyclerView mCastRecyclerView;
     @BindView(R.id.review_rv)
     RecyclerView mReviewRecyclerView;
+    @BindView(R.id.similar_rv)
+    RecyclerView mSimilarRecyclerView;
 
     VideoListAdapter mVideoAdapter;
     CastListAdapter mCastAdapter;
     ReviewListAdapter mReviewAdapter;
+    SimilarMovieListAdapter mSimilarAdapter;
 
 
 
@@ -113,7 +121,22 @@ public class DetailsActivity extends AppCompatActivity {
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-        movie_details = getIntent().getParcelableExtra("movieList");
+
+        if(getIntent().getParcelableExtra("movieList") != null) {
+            movie_details = getIntent().getParcelableExtra("movieList");
+            movieListDetails_helper();
+        }
+        if(getIntent().getParcelableExtra("similarMovieList") != null) {
+            similarMovies_details = getIntent().getParcelableExtra("similarMovieList");
+            similarMovieListDetails_helper();
+        }
+
+
+    }
+
+
+    public void movieListDetails_helper ()
+    {
         String title_value = movie_details.getTitle();
         String poster_path = movie_details.getPosterPath();
         String plot_synopsis = movie_details.getOverview();
@@ -161,16 +184,69 @@ public class DetailsActivity extends AppCompatActivity {
         release.setText(outputDate);
         title.setText(title_value);
 
-        network_helper();
+        network_helper(movie_details.getid());
 
     }
 
-private void videoRV(List<Videos_POJO> trailers){
-    mVideoAdapter = new VideoListAdapter(this, trailers);
-    mVideoRecyclerView.setLayoutManager(new GridLayoutManager(this, 1,GridLayoutManager.HORIZONTAL,false));
-    mVideoRecyclerView.setHasFixedSize(true);
-    mVideoRecyclerView.setAdapter(mVideoAdapter);
-}
+
+    private void similarMovieListDetails_helper(){
+        String title_value = similarMovies_details.getTitle();
+        String poster_path = similarMovies_details.getPosterPath();
+        String plot_synopsis = similarMovies_details.getOverview();
+        String user_rating = similarMovies_details.getVoteAverage();
+        String release_date = similarMovies_details.getReleaseDate();
+        final String backdrop_path = similarMovies_details.getBackdropPath();
+
+
+        getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.shared_element_transation));
+        poster.setTransitionName("poster");
+
+        Picasso.with(this).load( ConfigURL.POSTER_PATH + poster_path)
+                .into(poster);
+
+        Picasso.with(this).load( ConfigURL.BACKDROP_PATH + backdrop_path)
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        backdrop.setBackgroundDrawable(new BitmapDrawable(bitmap));
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat outputFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        String outputDate = null;
+        try {
+            Date date = inputFormat.parse(release_date);
+            outputDate = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        synopsis.setText(plot_synopsis);
+        rating.setText(user_rating);
+        release.setText(outputDate);
+        title.setText(title_value);
+
+        network_helper(Integer.toString(similarMovies_details.getId()));
+    }
+
+
+    private void videoRV(List<Videos_POJO> trailers){
+        mVideoAdapter = new VideoListAdapter(this, trailers);
+        mVideoRecyclerView.setLayoutManager(new GridLayoutManager(this, 1,GridLayoutManager.HORIZONTAL,false));
+        mVideoRecyclerView.setHasFixedSize(true);
+        mVideoRecyclerView.setAdapter(mVideoAdapter);
+    }
 
     private void castRV(List<Cast> cast){
         mCastAdapter = new CastListAdapter(this, cast);
@@ -187,14 +263,46 @@ private void videoRV(List<Videos_POJO> trailers){
         mReviewRecyclerView.setAdapter(mReviewAdapter);
     }
 
+    private void similarRV(List<SimilarMoviesResults> similar){
+        mSimilarAdapter = new SimilarMovieListAdapter(this, similar);
+        mSimilarRecyclerView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL,false));
+        mSimilarRecyclerView.setHasFixedSize(true);
+        mSimilarRecyclerView.setAdapter(mSimilarAdapter);
+    }
 
-    private void network_helper(){
+
+    private void similarMovie_network_helper(String id){
+        MovieData_Interface apiService = ApiClient.getClient().create(MovieData_Interface.class);
+        Call<SimilarMovies> call = apiService.getSimilarMovies(id, API_KEY);
+        Log.v("url of similar details", call.request().url() + "");
+        Log.v("id",id);
+        call.enqueue(new Callback<SimilarMovies>() {
+            @Override
+            public void onResponse(Call<SimilarMovies> call, Response<SimilarMovies> response) {
+                if(response.isSuccessful()){
+                    if(response.body() != null){
+                        List<SimilarMoviesResults> similarMovies = response.body().getResults();
+                        similarRV(similarMovies);
+                        Log.d(TAG, "number of similar movies received:" + similarMovies.size());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SimilarMovies> call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
+    }
+
+
+    private void network_helper(final String id){
         String queries = VIDEOS+","+CREDITS+","+REVIEWS;
 
         MovieData_Interface apiService = ApiClient.getClient().create(MovieData_Interface.class);
-        Call<MoreDetails> call = apiService.getMoreDetails(movie_details.getid(), API_KEY, queries);
+        Call<MoreDetails> call = apiService.getMoreDetails(id, API_KEY, queries);
         Log.v("url of more details", call.request().url() + "");
-        Log.v("id", movie_details.getid());
+        Log.v("id", id);
         call.enqueue(new Callback<MoreDetails>() {
             @Override
             public void onResponse(Call<MoreDetails> call, Response<MoreDetails> response) {
@@ -245,6 +353,7 @@ private void videoRV(List<Videos_POJO> trailers){
 
                         genres_types.setText(genre);
                     }
+                    similarMovie_network_helper(id);
                 }
             }
 

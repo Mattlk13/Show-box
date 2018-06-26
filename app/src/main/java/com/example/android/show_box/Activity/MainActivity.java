@@ -313,8 +313,10 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
         // Save list state
-        mListState = manager.onSaveInstanceState();
-        state.putParcelable(KEY_RECYCLER_STATE, mListState);
+        if(manager != null) {
+            mListState = manager.onSaveInstanceState();
+            state.putParcelable(KEY_RECYCLER_STATE, mListState);
+        }
     }
 
     protected void onRestoreInstanceState(Bundle state) {
